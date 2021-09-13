@@ -38,9 +38,9 @@
 
 // Features definition
 #define SUPPORT_OBJECT_MODEL             1
-#define HAS_CPU_TEMP_SENSOR		         1	// enabling the CPU temperature sensor disables Due pin 13 due to bug in SAM3X
+#define HAS_CPU_TEMP_SENSOR		         0	// enabling the CPU temperature sensor disables Due pin 13 due to bug in SAM3X
 #define HAS_HIGH_SPEED_SD		         0
-#define HAS_VOLTAGE_MONITOR		         1
+#define HAS_VOLTAGE_MONITOR		         0
 #define ACTIVE_LOW_HEAT_ON		         0
 #define HAS_VREF_MONITOR                 0
 
@@ -59,7 +59,7 @@
 #define SUPPORT_LED_STRIPS               1
 #define SUPPORT_ASYNC_MOVES		         0
 #define ALLOCATE_DEFAULT_PORTS           0
-#define TRACK_OBJECT_NAMES		         1
+#define TRACK_OBJECT_NAMES		         0
 
 #if defined(LPC_NETWORKING)
     //LPC Ethernet
@@ -75,18 +75,18 @@
 
 #elif defined(ESP8266WIFI)
     #define HAS_RTOSPLUSTCP_NETWORKING   0
-    #define SUPPORT_12864_LCD            1
+    #define SUPPORT_12864_LCD            0
     #define HAS_WIFI_NETWORKING          1
     #define HAS_MASS_STORAGE             1
     #define SUPPORT_TELNET               0
-    #define SUPPORT_ACCELEROMETERS       1
+    #define SUPPORT_ACCELEROMETERS       0
 
     #define BOARD_NAME          "STM32F4 WiFi"
     #define BOARD_SHORT_NAME    "STMWiFi"
 
 #elif defined(LPC_SBC)
     #define HAS_RTOSPLUSTCP_NETWORKING   0
-    #define SUPPORT_12864_LCD            1
+    #define SUPPORT_12864_LCD            0
     #define HAS_WIFI_NETWORKING          0
     #define HAS_MASS_STORAGE             0
     #define HAS_LINUX_INTERFACE          1
@@ -98,7 +98,7 @@
 
 #else
     #define HAS_RTOSPLUSTCP_NETWORKING   0
-    #define SUPPORT_12864_LCD            1
+    #define SUPPORT_12864_LCD            0
     #define HAS_WIFI_NETWORKING          0
     #define HAS_MASS_STORAGE             1
     #define SUPPORT_TELNET               0
@@ -388,23 +388,14 @@ struct BoardEntry
 };
 
 #include "Boards/BIQU_SKR.h"
-#include "Boards/FLY.h"
-#include "Boards/Generic.h"
 #undef HAS_SMART_DRIVERS
 
 
 //Known boards with built in stepper configurations and pin table 
 constexpr BoardEntry LPC_Boards[] =
 {
-    {"biquskrpro_1.1",      PinTable_BIQU_SKR_PRO_v1_1,    ARRAY_SIZE(PinTable_BIQU_SKR_PRO_v1_1),    biquskr_pro_1_1_Defaults},
-    {"biqugtr_1.0",      PinTable_BIQU_GTR_v1_0,    ARRAY_SIZE(PinTable_BIQU_GTR_v1_0),    biqu_gtr_1_0_Defaults},
-    {"fly_e3_pro",      PinTable_FLY_E3_PRO,    ARRAY_SIZE(PinTable_FLY_E3_PRO),    fly_e3_pro_Defaults},
-    {"fly_f407zg",      PinTable_FLY_F407ZG,    ARRAY_SIZE(PinTable_FLY_F407ZG),    fly_f407zg_Defaults},
-    {"fly_e3",      PinTable_FLY_E3,    ARRAY_SIZE(PinTable_FLY_E3),    fly_e3_Defaults},
-    {"fly_cdyv2",      PinTable_FLY_CDYV2,    ARRAY_SIZE(PinTable_FLY_CDYV2),    fly_cdyv2_Defaults},
-    {"biquskr_rrf_e3_1.1",      PinTable_BTT_RRF_E3_v1_1,    ARRAY_SIZE(PinTable_BTT_RRF_E3_v1_1),    btt_rrf_e3_1_1_Defaults},
-    {"biquskr_2", PinTable_BTT_SKR_2, ARRAY_SIZE(PinTable_BTT_SKR_2), btt_skr_2_Defaults},
-    {"generic",      PinTable_Generic,    ARRAY_SIZE(PinTable_Generic),    Generic_Defaults},    
+    //{"biquskr_2",      PinTable_BTT_SKR_2,   ARRAY_SIZE(PinTable_BTT_SKR_2),   btt_skr_2_Defaults}, 
+    {"btt_octopus_v1", PinTable_BTT_OCTOPUS, ARRAY_SIZE(PinTable_BTT_OCTOPUS), btt_octopus_Defaults}, 
 };
 
 

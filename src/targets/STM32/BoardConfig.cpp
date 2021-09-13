@@ -247,24 +247,24 @@ static void ConfigureSPIPins(SSPChannel dev, Pin clk, Pin miso, Pin mosi)
 }
 
 
-static char *ReadTerminal()
-{
-    static uint32_t pos;
-    static char line[20];
-    if (SERIAL_MAIN_DEVICE.available())
-    {
-        int ch = SERIAL_MAIN_DEVICE.read();
-        if ((ch == '\n' || ch == '\r') && pos > 0)
-        {
-            line[pos] = '\0';
-            pos = 0;
-            return line;
-        }
-        if (ch >= 0 && pos < 20)
-            line[pos++] = ch;
-    }
-    return (char *)"";
-}
+// static char *ReadTerminal()
+// {
+//     static uint32_t pos;
+//     static char line[20];
+//     if (SERIAL_MAIN_DEVICE.available())
+//     {
+//         int ch = SERIAL_MAIN_DEVICE.read();
+//         if ((ch == '\n' || ch == '\r') && pos > 0)
+//         {
+//             line[pos] = '\0';
+//             pos = 0;
+//             return line;
+//         }
+//         if (ch >= 0 && pos < 20)
+//             line[pos++] = ch;
+//     }
+//     return (char *)"";
+// }
 
 static void FatalError(const char* fmt, ...)
 {
@@ -301,38 +301,38 @@ static void CheckDriverPins() noexcept
 #endif
 
 
-static void UnknownHardware(uint32_t sig)
-{
-    for(;;)
-    {
-        debugPrintf("\nRRF has been unable to identify the current hardware.\n");
-        debugPrintf("This may be because it is a new board or has a new bootloader installed.\n");
-        debugPrintf("To register the hardware configuration please contact TeamGloomy via our\n");
-        debugPrintf("discord server (https://discord.gg/uS97Qs7) and supply details of\n");
-        debugPrintf("the board and the board signature(0x%x).\n", (unsigned)sig);
-        debugPrintf("\nRRF can try and discover how to mount the SD card, but doing this may\n");
-        debugPrintf("turn on heaters or other devices. If you wish to continue with this automatic\n");
-        debugPrintf("search please ensure there is a valid SD card inserted in\n");
-        debugPrintf("the reader and type \"yes\".\n");
-        debugPrintf("Confirm automatic discovery: ");
-        for(int i = 0; i < 10000; i++)
-        {
-            delay(1);
-            char *line = ReadTerminal();
-            if (StringEqualsIgnoreCase(line, "yes"))
-                return;
-            if (StringEqualsIgnoreCase(line, "pins"))
-            {
-                for (int p = 0; p < P_END; p++)
-                {
-                    uint32_t mode = pin_get_function((Pin)p);
-                    debugPrintf("Pin %c.%d fmode 0x%x (mode %x afnum %x)\n", (p >> 4) + 'A', (p & 0xf), (unsigned)mode, (unsigned)STM_PIN_FUNCTION(mode), (unsigned)STM_PIN_AFNUM(mode));
-                }
-            }
-        }
-        debugPrintf("\n\n");
-    }
-}
+// static void UnknownHardware(uint32_t sig)
+// {
+//     for(;;)
+//     {
+//         debugPrintf("\nRRF has been unable to identify the current hardware.\n");
+//         debugPrintf("This may be because it is a new board or has a new bootloader installed.\n");
+//         debugPrintf("To register the hardware configuration please contact TeamGloomy via our\n");
+//         debugPrintf("discord server (https://discord.gg/uS97Qs7) and supply details of\n");
+//         debugPrintf("the board and the board signature(0x%x).\n", (unsigned)sig);
+//         debugPrintf("\nRRF can try and discover how to mount the SD card, but doing this may\n");
+//         debugPrintf("turn on heaters or other devices. If you wish to continue with this automatic\n");
+//         debugPrintf("search please ensure there is a valid SD card inserted in\n");
+//         debugPrintf("the reader and type \"yes\".\n");
+//         debugPrintf("Confirm automatic discovery: ");
+//         for(int i = 0; i < 10000; i++)
+//         {
+//             delay(1);
+//             char *line = ReadTerminal();
+//             if (StringEqualsIgnoreCase(line, "yes"))
+//                 return;
+//             if (StringEqualsIgnoreCase(line, "pins"))
+//             {
+//                 for (int p = 0; p < P_END; p++)
+//                 {
+//                     uint32_t mode = pin_get_function((Pin)p);
+//                     debugPrintf("Pin %c.%d fmode 0x%x (mode %x afnum %x)\n", (p >> 4) + 'A', (p & 0xf), (unsigned)mode, (unsigned)STM_PIN_FUNCTION(mode), (unsigned)STM_PIN_AFNUM(mode));
+//                 }
+//             }
+//         }
+//         debugPrintf("\n\n");
+//     }
+// }
 
 // Determine how to access the SD card
 static uint32_t signature;
@@ -345,21 +345,21 @@ typedef struct {
 
 // These are our known SD card configurations
 static constexpr SDCardConfig SDCardConfigs[] = {
-    {SSP1, {PA_5, PA_6, PB_5, PA_4, NoPin, NoPin}, {0x502, 0x502, 0x502, 0x1}}, // SKR Pro
-    {SSP1, {PA_5, PA_6, PA_7, PA_4, NoPin, NoPin}, {0x502, 0x502, 0x502, 0x1}}, // GTR
+    // {SSP1, {PA_5, PA_6, PB_5, PA_4, NoPin, NoPin}, {0x502, 0x502, 0x502, 0x1}}, // SKR Pro
+    // {SSP1, {PA_5, PA_6, PA_7, PA_4, NoPin, NoPin}, {0x502, 0x502, 0x502, 0x1}}, // GTR
     {SSPSDIO, {PC_8, PC_9, PC_10, PC_11, PC_12, PD_2}, {0xc02, 0xc02, 0xc02, 0xc02, 0xc02, 0xc02}}, // Fly/SDIO
-    {SSP3, {PC_10, PC_11, PC_12, PC_9, NoPin, NoPin}, {0x602, 0x602, 0x602, 0x1}}, // MKS?
+    // {SSP3, {PC_10, PC_11, PC_12, PC_9, NoPin, NoPin}, {0x602, 0x602, 0x602, 0x1}}, // MKS?
 };
 
-static bool TryConfig(uint32_t config, FATFS *fs)
+static bool TryConfig(FATFS *fs)
 {
-    const SDCardConfig *conf = &SDCardConfigs[config];
-    if (conf->device != SSPSDIO)
-    {
-        ConfigureSPIPins(conf->device, conf->pins[0], conf->pins[1], conf->pins[2]);
-        sd_mmc_setSSPChannel(0, conf->device, conf->pins[3]);
-    }
-    else
+    const SDCardConfig *conf = &SDCardConfigs[0];
+    // if (conf->device != SSPSDIO)
+    // {
+    //     ConfigureSPIPins(conf->device, conf->pins[0], conf->pins[1], conf->pins[2]);
+    //     sd_mmc_setSSPChannel(0, conf->device, conf->pins[3]);
+    // }
+    // else
         sd_mmc_setSSPChannel(0, conf->device, NoPin);
     FRESULT rslt= f_mount (fs, "0:", 1);
     if (rslt == FR_OK)
@@ -367,74 +367,79 @@ static bool TryConfig(uint32_t config, FATFS *fs)
         return true;
     }
     // mount failed reset I/O pins to inputs
-    if (conf->device != SSPSDIO)
-        ((HardwareSPI *)(SPI::getSSPDevice(conf->device)))->disable();
+    // if (conf->device != SSPSDIO)
+    //     ((HardwareSPI *)(SPI::getSSPDevice(conf->device)))->disable();
     for (size_t i = 0; i < ARRAY_SIZE(conf->pins); i++)
         pinMode(conf->pins[i], INPUT);    
     sd_mmc_setSSPChannel(0, SSPNONE, NoPin);
     return false;
 }    
 
-static bool CheckPinConfig(uint32_t config)
-{
-    // check to see if the pins are currently set in the expected state
-    // The bootloader on many boards will leave the pins configured after
-    // accessing the SD card.
-    const SDCardConfig *conf = &SDCardConfigs[config];
-    for(size_t i = 0; i < ARRAY_SIZE(conf->pins); i++)
-        if (conf->pins[i] != NoPin && pin_get_function(conf->pins[i]) != conf->mode[i])
-            return false;
-    return true;
-}
+// static bool CheckPinConfig(uint32_t config)
+// {
+//     // check to see if the pins are currently set in the expected state
+//     // The bootloader on many boards will leave the pins configured after
+//     // accessing the SD card.
+//     const SDCardConfig *conf = &SDCardConfigs[config];
+//     for(size_t i = 0; i < ARRAY_SIZE(conf->pins); i++)
+//         if (conf->pins[i] != NoPin && pin_get_function(conf->pins[i]) != conf->mode[i])
+//             return false;
+//     return true;
+// }
 
 
 static SSPChannel InitSDCard(uint32_t boardSig, FATFS *fs)
 {
-    int conf = SD_NONE;
-    // First try to find a matching board
-    for(uint32_t i = 0; i < ARRAY_SIZE(LPC_Boards) && conf == SD_NONE; i++)
-        for(uint32_t j = 0; j < MaxSignatures && conf == SD_NONE; j++)
-            if (LPC_Boards[i].defaults.signatures[j] == boardSig)
-            {
-                conf = LPC_Boards[i].defaults.SDConfig;
-                debugPrintf("Sig match 0x%x %d board %s SDConfig %d\n", (unsigned) boardSig, (int)i, LPC_Boards[i].boardName, conf);
-            }
+    // int conf = SD_NONE;
+    // // First try to find a matching board
+    // // for(uint32_t i = 0; i < ARRAY_SIZE(LPC_Boards) && conf == SD_NONE; i++)
+    // //     for(uint32_t j = 0; j < MaxSignatures && conf == SD_NONE; j++)
+    //         if (LPC_Boards[0].defaults.signatures[j] == boardSig)
+    //         {
+    //             conf = LPC_Boards[0].defaults.SDConfig;
+    //             debugPrintf("Sig match 0x%x %d board %s SDConfig %d\n", (unsigned) boardSig, (int)i, LPC_Boards[i].boardName, conf);
+    //         }
             
-    if (conf == SD_NONE)
-    {
-        // failed to find matching signature, see if the bootloader has left things configured
-        for(uint32_t i = 0; i < ARRAY_SIZE(SDCardConfigs); i++)
-            if (CheckPinConfig(i))
-            {
-                conf = i;
-                debugPrintf("loader match %d\n", (int)i);
-            }
-    }
+    // if (conf == SD_NONE)
+    // {
+    //     // failed to find matching signature, see if the bootloader has left things configured
+    //     for(uint32_t i = 0; i < ARRAY_SIZE(SDCardConfigs); i++)
+    //         if (CheckPinConfig(i))
+    //         {
+    //             conf = i;
+    //             debugPrintf("loader match %d\n", (int)i);
+    //         }
+    // }
 
-    if (conf == SD_NONE)
-    {
-        UnknownHardware(boardSig);
-    }
-    else
-    {
-        for(int i = 0; i < 30; i++)
-        {
-            if (TryConfig(conf, fs))
-                return SDCardConfigs[conf].device;
-            debugPrintf("Unable to mount SD card. Please insert a card.\n");
-            delay(2000);
-        }
-        FatalError("Unable to mount SD card, board signature is 0x%x.\n", (unsigned)boardSig);
-    }
+    // if (conf == SD_NONE)
+    // {
+    //     UnknownHardware(boardSig);
+    // }
+    // else
+    // {
+    //     for(int i = 0; i < 30; i++)
+    //     {
+    //         if (TryConfig(conf, fs))
+    //             return SDCardConfigs[conf].device;
+    //         debugPrintf("Unable to mount SD card. Please insert a card.\n");
+    //         delay(2000);
+    //     }
+    //     FatalError("Unable to mount SD card, board signature is 0x%x.\n", (unsigned)boardSig);
+    // }
 
-    // Now try each config in turn
-    for(uint32_t i = 0; i < ARRAY_SIZE(SDCardConfigs); i++)
+    // // Now try each config in turn
+    // for(uint32_t i = 0; i < ARRAY_SIZE(SDCardConfigs); i++)
+    // {
+    //     if (TryConfig(i, fs))
+    //     {
+    //         debugPrintf("SD card interface %d selected\n", (int)i);
+    //         return SDCardConfigs[i].device;
+    //     }
+    // }
+    if (TryConfig(fs))
     {
-        if (TryConfig(i, fs))
-        {
-            debugPrintf("SD card interface %d selected\n", (int)i);
-            return SDCardConfigs[i].device;
-        }
+        debugPrintf("SD card interface %d selected\n", (int)0);
+        return SDCardConfigs[0].device;
     }
     FatalError("Failed to mount SD card\n");
     return SSPNONE;

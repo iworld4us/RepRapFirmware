@@ -38,7 +38,6 @@ Licence: GPL
 #include <GPIO/GpInPort.h>
 #include <GPIO/GpOutPort.h>
 #include <Comms/AuxDevice.h>
-#include <Comms/PanelDueUpdater.h>
 #include <General/IPAddress.h>
 #include <General/function_ref.h>
 
@@ -377,8 +376,8 @@ public:
     bool IsAuxRaw(size_t auxNumber) const noexcept;
 	void SetAuxRaw(size_t auxNumber, bool raw) noexcept;
 #if HAS_AUX_DEVICES
-	PanelDueUpdater* GetPanelDueUpdater() noexcept { return panelDueUpdater; }
-	void InitPanelDueUpdater() noexcept;
+	// PanelDueUpdater* GetPanelDueUpdater() noexcept { return panelDueUpdater; }
+	// void InitPanelDueUpdater() noexcept;
 #endif
 
 	void SetIPAddress(IPAddress ip) noexcept;
@@ -831,7 +830,7 @@ private:
 
 #if HAS_AUX_DEVICES
 	AuxDevice auxDevices[NumSerialChannels - 1];
-	PanelDueUpdater* panelDueUpdater;
+	// PanelDueUpdater* panelDueUpdater;
 #endif
 
 	// Files

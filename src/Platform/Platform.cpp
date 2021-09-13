@@ -403,7 +403,7 @@ Platform::Platform() noexcept :
 #endif
 	lastFanCheckTime(0),
 #if HAS_AUX_DEVICES
-	panelDueUpdater(nullptr),
+	// panelDueUpdater(nullptr),
 #endif
 #if HAS_MASS_STORAGE
 	sysDir(nullptr),
@@ -1155,7 +1155,7 @@ void Platform::Spin() noexcept
 	// Try to flush messages to serial ports
 	(void)FlushMessages();
 
-#if STM32F4
+#if STM32F4 && HAS_VREF_MONITOR
 	// Update the VRef reference correction
 	// See: http://www.efton.sk/STM32/STM32_VREF.pdf and https://www.st.com/resource/en/datasheet/dm00037051.pdf
 	// We get current VRef to compensate reading.
@@ -3400,13 +3400,13 @@ void Platform::SetAuxRaw(size_t auxNumber, bool raw) noexcept
 }
 
 #if HAS_AUX_DEVICES
-void Platform::InitPanelDueUpdater() noexcept
-{
-	if (panelDueUpdater == nullptr)
-	{
-		panelDueUpdater = new PanelDueUpdater();
-	}
-}
+// void Platform::InitPanelDueUpdater() noexcept
+// {
+// 	if (panelDueUpdater == nullptr)
+// 	{
+// 		panelDueUpdater = new PanelDueUpdater();
+// 	}
+// }
 #endif
 
 void Platform::AppendAuxReply(size_t auxNumber, const char *msg, bool rawMessage) noexcept

@@ -34,8 +34,8 @@ void sd_mmc_setSSPChannel(uint8_t slot, SSPChannel channel, Pin cs)
     }
     if (channel == SSPSDIO)
         _ffs[slot] = new SDCardSDIO();
-    else if (channel != SSPNONE)
-        _ffs[slot] = new SDCardSPI(channel, cs);
+    // else if (channel != SSPNONE)
+    //     _ffs[slot] = new SDCardSPI(channel, cs);
 }
 
 
