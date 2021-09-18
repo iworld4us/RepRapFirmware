@@ -13,7 +13,7 @@
 #include "ScaraKinematics.h"
 #include "HangprinterKinematics.h"
 #include "PolarKinematics.h"
-#include "FiveBarScaraKinematics.h"
+//#include "FiveBarScaraKinematics.h"
 
 #include <Platform/RepRap.h>
 #include <Platform/Platform.h>
@@ -186,6 +186,7 @@ bool Kinematics::IsContinuousRotationAxis(size_t axis) const noexcept
 	case KinematicsType::coreXYUV:
 	case KinematicsType::markForged:
 		return new CoreKinematics(k);
+//		return new CoreKinematics(KinematicsType::cartesian);
 
 	case KinematicsType::linearDelta:
 		return new LinearDeltaKinematics();
@@ -197,8 +198,8 @@ bool Kinematics::IsContinuousRotationAxis(size_t axis) const noexcept
 		return new PolarKinematics();
 	case KinematicsType::rotaryDelta:
 		return new RotaryDeltaKinematics();
-	case KinematicsType::fiveBarScara:
-		return new FiveBarScaraKinematics();
+	//case KinematicsType::fiveBarScara:
+	//	return new FiveBarScaraKinematics();
 	}
 }
 

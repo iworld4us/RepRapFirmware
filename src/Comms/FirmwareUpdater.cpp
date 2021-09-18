@@ -18,7 +18,7 @@
 #endif
 
 #if HAS_AUX_DEVICES
-# include <Comms/PanelDueUpdater.h>
+//# include <Comms/PanelDueUpdater.h>
 #endif
 
 namespace FirmwareUpdater
@@ -90,10 +90,10 @@ namespace FirmwareUpdater
 		}
 #endif
 #if HAS_AUX_DEVICES
-		PanelDueUpdater *panelDueUpdater = reprap.GetPlatform().GetPanelDueUpdater();
-		if (panelDueUpdater != nullptr && !panelDueUpdater->Idle()) {
-			return false;
-		}
+//		PanelDueUpdater *panelDueUpdater = reprap.GetPlatform().GetPanelDueUpdater();
+//		if (panelDueUpdater != nullptr && !panelDueUpdater->Idle()) {
+//			return false;
+//		}
 #endif
 		return true;
 	}
@@ -128,15 +128,15 @@ namespace FirmwareUpdater
 			break;
 # endif
 # if HAS_AUX_DEVICES
-		case PanelDueFirmwareModule:
-			{
-				Platform& platform = reprap.GetPlatform();
-				if (platform.GetPanelDueUpdater() == nullptr)
-				{
-					platform.InitPanelDueUpdater();
-				}
-				platform.GetPanelDueUpdater()->Start(filenameRef, serialChannel);
-			}
+//		case PanelDueFirmwareModule:
+//			{
+//				Platform& platform = reprap.GetPlatform();
+//				if (platform.GetPanelDueUpdater() == nullptr)
+//				{
+//					platform.InitPanelDueUpdater();
+//				}
+//				platform.GetPanelDueUpdater()->Start(filenameRef, serialChannel);
+//			}
 # endif
 		}
 #endif

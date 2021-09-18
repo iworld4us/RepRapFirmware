@@ -257,7 +257,7 @@ void vAssertCalled(uint32_t line, const char *file) noexcept
 	);
 }
 
-#if LPC17xx
+#if LPC17xx || STM32F4
 extern "C" [[noreturn]] void applicationMallocFailedCalledDispatcher(const uint32_t *pulFaultStackAddress) noexcept
 {
 	SoftwareReset(SoftwareResetReason::outOfMemory, pulFaultStackAddress);

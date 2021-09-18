@@ -38,9 +38,9 @@
 
 // Features definition
 #define SUPPORT_OBJECT_MODEL             1
-#define HAS_CPU_TEMP_SENSOR		         1	// enabling the CPU temperature sensor disables Due pin 13 due to bug in SAM3X
+#define HAS_CPU_TEMP_SENSOR		        0// 1	// enabling the CPU temperature sensor disables Due pin 13 due to bug in SAM3X
 #define HAS_HIGH_SPEED_SD		         0
-#define HAS_VOLTAGE_MONITOR		         1
+#define HAS_VOLTAGE_MONITOR		        0// 1
 #define ACTIVE_LOW_HEAT_ON		         0
 #define HAS_VREF_MONITOR                 0
 
@@ -60,7 +60,7 @@
 #define SUPPORT_BITBANG_NEOPIXEL         1
 #define SUPPORT_ASYNC_MOVES		         0
 #define ALLOCATE_DEFAULT_PORTS           0
-#define TRACK_OBJECT_NAMES		         1
+#define TRACK_OBJECT_NAMES		        0// 1
 
 #if defined(LPC_NETWORKING)
     //LPC Ethernet
@@ -76,18 +76,18 @@
 
 #elif defined(ESP8266WIFI)
     #define HAS_RTOSPLUSTCP_NETWORKING   0
-    #define SUPPORT_12864_LCD            1
+    #define SUPPORT_12864_LCD          0//  1
     #define HAS_WIFI_NETWORKING          1
     #define HAS_MASS_STORAGE             1
     #define SUPPORT_TELNET               0
-    #define SUPPORT_ACCELEROMETERS       1
+    #define SUPPORT_ACCELEROMETERS     0//  1
     #define HAS_WRITER_TASK              1
     #define BOARD_NAME          "STM32F4 WiFi"
     #define BOARD_SHORT_NAME    "STMWiFi"
 
 #elif defined(LPC_SBC)
     #define HAS_RTOSPLUSTCP_NETWORKING   0
-    #define SUPPORT_12864_LCD            1
+    #define SUPPORT_12864_LCD          0//  1
     #define HAS_WIFI_NETWORKING          0
     #define HAS_MASS_STORAGE             0
     #define HAS_LINUX_INTERFACE          1
@@ -100,7 +100,7 @@
 
 #else
     #define HAS_RTOSPLUSTCP_NETWORKING   0
-    #define SUPPORT_12864_LCD            1
+    #define SUPPORT_12864_LCD          0//  1
     #define HAS_WIFI_NETWORKING          0
     #define HAS_MASS_STORAGE             1
     #define SUPPORT_TELNET               0
