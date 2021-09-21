@@ -377,16 +377,20 @@ Pin BoardConfig::StringToPin(const char *strvalue) noexcept
     
     if(tolower(*strvalue) == 'p') strvalue++; //skip P
     
-    //check size.. should be 3chars or 4 chars i.e. 0.1, 2.25, 1_23. 2nd char should be . or _
+    //check size.. should be 2, 3 or 4 chars i.e. 0.1 0.1, 2.25, 1_23. 2nd char can be . or _
     uint8_t len = strlen(strvalue);
-    if((len == 3 || len == 4) && (*(strvalue+1) == '.' || *(strvalue+1) == '_') )
+    if(len >= 2 && len <= 4)
     {
         const char *ptr = nullptr;
         
-        uint8_t port = StrToI32(strvalue, &ptr);
-        if(ptr > strvalue && port <= 4)
+        uint8_t port = *strvalue - '0';
+        if(port <= 4)
         {
-            strvalue+=2;
+            // skip "." or "_"
+            if ((*(strvalue+1) == '.' || *(strvalue+1) == '_'))
+                strvalue += 2;
+            else
+                strvalue += 1;
             uint8_t pin = StrToI32(strvalue, &ptr);
             
             if(ptr > strvalue && pin < 32)
@@ -784,9 +788,17 @@ bool BoardConfig::GetConfigKeys(FIL *configFile, const boardConfigEntry_t *board
                                         {
                                             pos++;
                                         }
+                                        // Skip trailing whitespace
+                                        if (pos < maxLineLength && isSpaceOrTab(line[pos]))
+                                        {
+                                            // make sure we do not include trailing whitespace in string
+                                            line[pos++] = 0; // null terminate the string
+                                            while (pos < maxLineLength && isSpaceOrTab(line[pos]))
+                                                pos++;
+                                        }
 
-                                        //see if we ended due to comment, ;, or null
-                                        if(pos == maxLineLength || line[pos] == 0 || line[pos] == '/' || line[pos] == '#' || line[pos]==';')
+                                        // make sure we ended on a valid character
+                                        if(pos >= maxLineLength || (line[pos] != '}' && line[pos] != ','))
                                         {
                                             debugPrintf("Error: Array ended without Closing Brace?\n");
                                             searching = false;

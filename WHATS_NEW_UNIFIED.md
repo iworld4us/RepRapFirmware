@@ -1,3 +1,10 @@
+Version 3.3.0_9
+===============
+* Remove "_" from pin name definitions
+* Fix problem with spaces in board.txt pin arrays
+* Ignore "_" in pin names used in board.txt
+* Output RAW ADC readings in M308 output when heat debug is enabled
+
 Version 3.3.0_8
 ===============
 * STM32F4 update Fly Super8 pins

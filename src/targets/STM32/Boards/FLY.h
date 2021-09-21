@@ -302,7 +302,7 @@ constexpr PinEntry PinTable_FLY_CDYV2[] =
     {PB_9, "PB9,Laser"},
 	
 	//Power ADC
-	{PC_3, "Power_ADC,PC3"}
+	{PC_3, "PowerADC,PC3"}
 };
 
 constexpr BoardDefaults fly_cdyv2_Defaults = {
@@ -424,12 +424,12 @@ constexpr BoardDefaults fly_e3_pro_Defaults = {
 constexpr PinEntry PinTable_FLY_SUPER8[] =
 {
     //Thermistors
-    {PF_4, "ADC_0,out0"},
-    {PF_5, "ADC_1,out1"},
-    {PF_9, "ADC_2,pwm_out2,pwm2,out2"},
-    {PF_10, "ADC_3,out3"},
-    {PC_0, "ADC_4,out4"},
-    {PC_1, "ADC_5,out5"},
+    {PF_4, "ADC0,out0"},
+    {PF_5, "ADC1,out1"},
+    {PF_9, "ADC2,pwmout2,pwm2,out2"},
+    {PF_10, "ADC3,out3"},
+    {PC_0, "ADC4,out4"},
+    {PC_1, "ADC5,out5"},
  
 
     //Endstops
@@ -440,10 +440,10 @@ constexpr PinEntry PinTable_FLY_SUPER8[] =
     {PD_7, "io4"},
     {PD_6, "io5"},
     {PA_8, "io6"},
-    {PF_8, "in7,pwm_out1,pwm1,out1"},
+    {PF_8, "in7,pwmout1,pwm1,out1"},
     {PF_3, "hvin"},
     // Servo
-    {PC_6,  "pwm_out0,pwm0,servo,out0" },
+    {PC_6,  "pwmout0,pwm0,servo,out0" },
 
    // Probe
     {PC_3, "probe"},

@@ -788,14 +788,14 @@ void Platform::Init() noexcept
 
 	for (size_t thermistor = 0; thermistor < NumThermistorInputs; thermistor++)
 	{
-#ifdef LPC17xx
+#if LPC17xx || STM32F4
 		if (TEMP_SENSE_PINS[thermistor] != NoPin)
 		{
 #endif
 		// TODO use ports for these?
 		pinMode(TEMP_SENSE_PINS[thermistor], AIN);
 		filteredAdcChannels[thermistor] = PinToAdcChannel(TEMP_SENSE_PINS[thermistor]);	// translate the pin number to the SAM ADC channel number;
-#ifdef LPC17xx
+#if LPC17xx || STM32F4
 		}
 		else
 			filteredAdcChannels[thermistor] = NO_ADC;
@@ -2563,7 +2563,7 @@ GCodeResult Platform::DiagnosticTest(GCodeBuffer& gb, const StringRef& reply, Ou
 		break;
 #endif
 
-#ifdef LPC17xx
+#if LPC17xx || STM32F4
 	// This code is now called directly from the gcode module to allow it to have access to the
 	// I/O stream with a push modifier (used for standard M122). Without this the output in DSF
 	// is split into multiple responses. 

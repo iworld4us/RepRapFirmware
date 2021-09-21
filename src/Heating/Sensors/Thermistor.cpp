@@ -271,6 +271,11 @@ GCodeResult Thermistor::Configure(GCodeBuffer& gb, const StringRef& reply, bool&
 			reply.catf(", Th %" PRIu32, reprap.GetPlatform().GetAdcFilter(adcFilterChannel).GetSum());
 #endif
 		}
+		if (reprap.Debug(moduleHeat))
+		{
+			bool valid;
+			reply.catf(", Raw %" PRIu32, GetRawReading(valid));
+		}
 	}
 
 	return GCodeResult::ok;
