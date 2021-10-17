@@ -1,3 +1,7 @@
+Verison 3.3.0_10
+===============
+* LPC Fix bug that can leave software PWM running when it should be off
+
 Version 3.3.0_9
 ===============
 * Remove "_" from pin name definitions

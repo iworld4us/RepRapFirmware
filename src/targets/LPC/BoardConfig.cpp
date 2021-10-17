@@ -434,31 +434,31 @@ void BoardConfig::PrintValue(MessageType mtype, configValueType configType, void
                 Pin pin = *(Pin *)(variable);
                 if(pin == NoPin)
                 {
-                    reprap.GetPlatform().MessageF(mtype, "NoPin ");
+                    reprap.GetPlatform().MessageF(mtype, "NoPin");
                 }
                 else
                 {
-                    reprap.GetPlatform().MessageF(mtype, "%d.%d ", (pin >> 5), (pin & 0x1F) );
+                    reprap.GetPlatform().MessageF(mtype, "%d.%d", (pin >> 5), (pin & 0x1F) );
                 }
             }
             break;
         case cvBoolType:
-            reprap.GetPlatform().MessageF(mtype, "%s ", (*(bool *)(variable) == true)?"true":"false" );
+            reprap.GetPlatform().MessageF(mtype, "%s", (*(bool *)(variable) == true)?"true":"false" );
             break;
         case cvFloatType:
-            reprap.GetPlatform().MessageF(mtype, "%.2f ",  (double) *(float *)(variable) );
+            reprap.GetPlatform().MessageF(mtype, "%.2f",  (double) *(float *)(variable) );
             break;
         case cvUint8Type:
-            reprap.GetPlatform().MessageF(mtype, "%u ",  *(uint8_t *)(variable) );
+            reprap.GetPlatform().MessageF(mtype, "%u",  *(uint8_t *)(variable) );
             break;
         case cvUint16Type:
-            reprap.GetPlatform().MessageF(mtype, "%d ",  *(uint16_t *)(variable) );
+            reprap.GetPlatform().MessageF(mtype, "%d",  *(uint16_t *)(variable) );
             break;
         case cvUint32Type:
-            reprap.GetPlatform().MessageF(mtype, "%lu ",  *(uint32_t *)(variable) );
+            reprap.GetPlatform().MessageF(mtype, "%lu",  *(uint32_t *)(variable) );
             break;
         case cvStringType:
-            reprap.GetPlatform().MessageF(mtype, "%s ",  (char *)(variable) );
+            reprap.GetPlatform().MessageF(mtype, "%s",  (char *)(variable) );
             break;
         default:{
             
@@ -510,6 +510,8 @@ void BoardConfig::Diagnostics(MessageType mtype) noexcept
             {
                 //TODO:: handle other values
                 if(next.type == cvPinType){
+                    if (p > 0)
+                        reprap.GetPlatform().MessageF(mtype, ", ");
                     BoardConfig::PrintValue(mtype, next.type, (void *)&((Pin *)(next.variable))[p]);
                 }
             }
@@ -581,7 +583,6 @@ void BoardConfig::PrintPinArray(MessageType mtype, Pin arr[], uint16_t numEntrie
     }
     reprap.GetPlatform().MessageF(mtype, "]\n");
 }
-
 
 //Set a variable from a string using the specified data type
 void BoardConfig::SetValueFromString(configValueType type, void *variable, char *valuePtr) noexcept
